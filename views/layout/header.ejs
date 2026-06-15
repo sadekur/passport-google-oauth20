@@ -25,21 +25,21 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
+              <a class="nav-link<%= path === '/' ? ' active' : '' %>" href="/">Home</a>
             </li>
             <% if (typeof user !== 'undefined' && user) { %>
               <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
+                <a class="nav-link<%= path === '/profile' ? ' active' : '' %>" href="/profile">Profile</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
               </li>
             <% } else { %>
               <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link<%= path === '/login' ? ' active' : '' %>" href="/login">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
+                <a class="nav-link<%= path === '/register' ? ' active' : '' %>" href="/register">Register</a>
               </li>
             <% } %>
           </ul>
