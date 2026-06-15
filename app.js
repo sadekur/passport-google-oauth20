@@ -141,4 +141,10 @@ app.use((req, res) => {
   res.status(404).render("404");
 });
 
+// error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render("404", { error: err.message });
+});
+
 module.exports = app;
