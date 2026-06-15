@@ -1,14 +1,14 @@
 const express = require("express");
 const cors = require("cors");
-const app = express();
-require("./config/database");
-require("dotenv").config();
-require("./config/passport");
-
 const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
+
+const app = express();
+require("dotenv").config();
+require("./config/database");
+require("./config/passport");
 
 const authRoutes = require("./routes/auth.routes");
 
@@ -16,6 +16,8 @@ app.set("view engine", "ejs");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(express.static("public"));
 
 app.set("trust proxy", 1);
 app.use(

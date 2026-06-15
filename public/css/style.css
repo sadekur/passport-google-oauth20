@@ -1,0 +1,19 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main.container {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.avatar-circle {
+  width: 120px;
+  height: 120px;
+  font-size: 3rem;
+}
