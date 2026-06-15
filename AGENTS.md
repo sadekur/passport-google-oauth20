@@ -38,7 +38,7 @@ PORT=4000                                 # optional, defaults to 4000
 
 ## Callback URL
 
-`config/passport.js:13` uses a dynamic callback URL based on `process.env.PORT`. It defaults to `http://localhost:4000/auth/google/callback`.
+`config/passport.js` uses a dynamic callback URL based on `process.env.PORT`. It defaults to `http://localhost:4000/auth/google/callback`.
 
 ## No tests / No linter
 
