@@ -1,24 +1,22 @@
 <%-include("layout/header")%>
 
-<div class="px-4 py-5 my-5 text-center">
-  <h1 class="display-4 fw-bold">Welcome to AuthApp</h1>
-  <div class="col-lg-6 mx-auto">
-    <p class="lead mb-4">
-      A secure authentication demo with <%= googleEnabled ? 'Google OAuth 2.0 and' : '' %> local login.
-    </p>
-    <% if (typeof user !== 'undefined' && user) { %>
-      <p class="mb-4">You are logged in as <strong><%= user.username %></strong>.</p>
-      <div class="d-flex justify-content-center gap-3">
-        <a href="/profile" class="btn btn-primary btn-lg">View Profile</a>
-        <a href="/logout" class="btn btn-outline-secondary btn-lg">Logout</a>
-      </div>
-    <% } else { %>
-      <div class="d-flex justify-content-center gap-3">
-        <a href="/login" class="btn btn-primary btn-lg">Login</a>
-        <a href="/register" class="btn btn-outline-primary btn-lg">Register</a>
-      </div>
-    <% } %>
-  </div>
+<div class="max-w-3xl mx-auto text-center py-16 sm:py-24 px-4">
+  <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">Welcome to AuthApp</h1>
+  <p class="text-lg sm:text-xl text-gray-600 mb-8">
+    A secure authentication demo with <%= googleEnabled ? 'Google OAuth 2.0 and' : '' %> local login.
+  </p>
+  <% if (typeof user !== 'undefined' && user) { %>
+    <p class="text-gray-600 mb-6">You are logged in as <strong class="text-gray-900"><%= user.username %></strong>.</p>
+    <div class="flex flex-col sm:flex-row justify-center gap-3">
+      <a href="/profile" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors">View Profile</a>
+      <a href="/logout" class="inline-block bg-white text-gray-700 px-6 py-3 rounded-lg font-medium border border-gray-300 hover:bg-gray-50 transition-colors">Logout</a>
+    </div>
+  <% } else { %>
+    <div class="flex flex-col sm:flex-row justify-center gap-3">
+      <a href="/login" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors">Login</a>
+      <a href="/register" class="inline-block bg-white text-gray-700 px-6 py-3 rounded-lg font-medium border border-gray-300 hover:bg-gray-50 transition-colors">Register</a>
+    </div>
+  <% } %>
 </div>
 
 <%-include("layout/footer")%>
