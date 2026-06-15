@@ -9,9 +9,9 @@ npm start          # nodemon index.js (dev server on :4000 by default)
 Requires `.env` with:
 
 ```
-MONGO_URL=mongodb://...
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
+MONGO_URL=mongodb://...                   # required
+GOOGLE_CLIENT_ID=...                      # optional — app runs with local auth only if missing
+GOOGLE_CLIENT_SECRET=...                  # optional
 SESSION_SECRET=<any random string>       # optional, falls back to "keyboard cat"
 PORT=4000                                 # optional, defaults to 4000
 ```
