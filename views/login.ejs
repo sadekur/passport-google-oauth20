@@ -4,10 +4,6 @@
   <div class="col-md-6 col-lg-4">
     <h1 class="mb-4 text-center">Login</h1>
 
-    <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
-      <div class="alert alert-danger"><%= error_msg %></div>
-<% } %>
-
     <form action="/login" method="post">
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>

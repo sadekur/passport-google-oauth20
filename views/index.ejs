@@ -1,12 +1,5 @@
 <%-include("layout/header")%>
 
-<% if (typeof success_msg !== 'undefined' && success_msg.length > 0) { %>
-  <div class="alert alert-success"><%= success_msg %></div>
-<% } %>
-<% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
-  <div class="alert alert-danger"><%= error_msg %></div>
-<% } %>
-
 <div class="px-4 py-5 my-5 text-center">
   <h1 class="display-4 fw-bold">Welcome to AuthApp</h1>
   <div class="col-lg-6 mx-auto">
