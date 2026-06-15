@@ -12,6 +12,7 @@ const saltRounds = 10;
 const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+const flash = require("connect-flash");
 
 app.set("view engine", "ejs");
 app.use(cors());
@@ -32,6 +33,15 @@ app.use(
   })
 );
 
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success");
+  res.locals.error_msg = req.flash("error");
+  res.locals.user = req.user || null;
+  next();
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -47,10 +57,46 @@ const checkLoggedIn = (req, res, next) => {
   next();
 };
 
+// register : get
+app.get("/register", checkLoggedIn, (req, res) => {
+  res.render("register");
+});
+
+// register : post
+app.post("/register", checkLoggedIn, async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      req.flash("error", "Username already exists.");
+      return res.redirect("/register");
+    }
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newUser = new User({ username, password: hashedPassword });
+    await newUser.save();
+    req.flash("success", "Registration successful. Please log in.");
+    res.redirect("/login");
+  } catch (err) {
+    req.flash("error", err.message);
+    res.redirect("/register");
+  }
+});
+
 // login : get
 app.get("/login", checkLoggedIn, (req, res) => {
   res.render("login");
 });
+
+// login : post
+app.post(
+  "/login",
+  checkLoggedIn,
+  passport.authenticate("local", {
+    successRedirect: "/profile",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })
+);
 
 app.get(
   "/auth/google",
@@ -78,21 +124,16 @@ const checkAuthenticated = (req, res, next) => {
 
 // profile protected route
 app.get("/profile", checkAuthenticated, (req, res) => {
-  res.render("profile", { username: req.user.username });
+  res.render("profile", { user: req.user });
 });
 
 // logout route
-app.get("/logout", (req, res) => {
-  try {
-    req.logout((err) => {
-      if (err) {
-        return next(err);
-      }
-      res.redirect("/");
-    });
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
+app.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    req.flash("success", "You have been logged out.");
+    res.redirect("/");
+  });
 });
 
 module.exports = app;
