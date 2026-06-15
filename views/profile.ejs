@@ -1,5 +1,41 @@
 <%-include("layout/header")%>
-<main>
-  <h1>Welcome <%=username%></h1>
-</main>
+
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body text-center py-5">
+        <% if (user.avatar) { %>
+          <img
+            src="<%= user.avatar %>"
+            alt="Avatar"
+            class="rounded-circle mb-3"
+            width="120"
+            height="120"
+          />
+        <% } else { %>
+          <div
+            class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3"
+            style="width: 120px; height: 120px; font-size: 3rem;"
+          >
+            <%= user.username.charAt(0).toUpperCase() %>
+          </div>
+        <% } %>
+        <h1 class="card-title">Welcome, <%= user.username %></h1>
+        <% if (user.email) { %>
+          <p class="text-muted"><%= user.email %></p>
+        <% } %>
+        <p class="text-muted">
+          Account created: <%= new Date(user.createdAt).toLocaleDateString() %>
+        </p>
+        <div class="mt-4">
+          <span class="badge bg-<%= user.googleId ? 'danger' : 'secondary' %> fs-6 me-2">
+            <%= user.googleId ? 'Google' : 'Local' %>
+          </span>
+        </div>
+        <a href="/logout" class="btn btn-outline-danger mt-4">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%-include("layout/footer")%>
