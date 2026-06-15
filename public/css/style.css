@@ -17,3 +17,17 @@ footer {
   height: 120px;
   font-size: 3rem;
 }
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.card {
+  border: none;
+  border-radius: 1rem;
+}
+
+.alert-dismissible .btn-close {
+  cursor: pointer;
+}
