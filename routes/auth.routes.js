@@ -25,7 +25,11 @@ router.get("/register", checkLoggedIn, (req, res) => {
 
 router.post("/register", checkLoggedIn, async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, confirmPassword } = req.body;
+    if (password !== confirmPassword) {
+      req.flash("error", "Passwords do not match.");
+      return res.redirect("/register");
+    }
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       req.flash("error", "Username already exists.");
