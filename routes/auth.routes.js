@@ -20,7 +20,7 @@ const checkAuthenticated = (req, res, next) => {
 };
 
 router.get("/register", checkLoggedIn, (req, res) => {
-  res.render("register");
+  res.render("register", { title: "Register" });
 });
 
 router.post("/register", checkLoggedIn, async (req, res) => {
@@ -43,7 +43,7 @@ router.post("/register", checkLoggedIn, async (req, res) => {
 });
 
 router.get("/login", checkLoggedIn, (req, res) => {
-  res.render("login");
+  res.render("login", { title: "Login" });
 });
 
 router.post(
@@ -74,7 +74,7 @@ router.get(
 );
 
 router.get("/profile", checkAuthenticated, (req, res) => {
-  res.render("profile", { user: req.user });
+  res.render("profile", { user: req.user, title: "Profile" });
 });
 
 router.get("/logout", (req, res, next) => {

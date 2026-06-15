@@ -46,13 +46,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", { title: "Home" });
 });
 
 app.use(authRoutes);
 
 app.use((req, res) => {
-  res.status(404).render("404");
+  res.status(404).render("404", { title: "Not Found" });
 });
 
 app.use((err, req, res, next) => {
