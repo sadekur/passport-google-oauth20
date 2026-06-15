@@ -100,18 +100,18 @@ app.post(
 
 app.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/login",
-    successRedirect: "/profile",
+    failureFlash: true,
   }),
   function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/");
+    req.flash("success", "Successfully logged in with Google.");
+    res.redirect("/profile");
   }
 );
 

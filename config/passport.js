@@ -31,23 +31,22 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: `http://localhost:${process.env.PORT || 4000}/auth/google/callback`,
     },
-    function (accessToken, refreshToken, profile, cb) {
-      User.findOne({ googleId: profile.id }, (err, user) => {
-        if (err) return cb(err, null);
-
-        // not a user; so create a new user with new google id
+    async function (accessToken, refreshToken, profile, cb) {
+      try {
+        let user = await User.findOne({ googleId: profile.id });
         if (!user) {
-          let newUser = new User({
+          user = new User({
             googleId: profile.id,
             username: profile.displayName,
+            email: profile.emails?.[0]?.value,
+            avatar: profile.photos?.[0]?.value,
           });
-          newUser.save();
-          return cb(null, newUser);
-        } else {
-          // if we find an user just return return user
-          return cb(null, user);
+          await user.save();
         }
-      });
+        return cb(null, user);
+      } catch (err) {
+        return cb(err, null);
+      }
     }
   )
 );
