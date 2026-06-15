@@ -60,22 +60,24 @@ router.post(
   })
 );
 
-router.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  router.get(
+    "/auth/google",
+    passport.authenticate("google", { scope: ["profile", "email"] })
+  );
 
-router.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/login",
-    failureFlash: true,
-  }),
-  (req, res) => {
-    req.flash("success", "Successfully logged in with Google.");
-    res.redirect("/profile");
-  }
-);
+  router.get(
+    "/auth/google/callback",
+    passport.authenticate("google", {
+      failureRedirect: "/login",
+      failureFlash: true,
+    }),
+    (req, res) => {
+      req.flash("success", "Successfully logged in with Google.");
+      res.redirect("/profile");
+    }
+  );
+}
 
 router.get("/profile", checkAuthenticated, (req, res) => {
   res.render("profile", { user: req.user, title: "Profile" });

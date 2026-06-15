@@ -3,7 +3,6 @@ const User = require("../models/user.model");
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 
 passport.use(
@@ -24,32 +23,35 @@ passport.use(
   })
 );
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `http://localhost:${process.env.PORT || 4000}/auth/google/callback`,
-    },
-    async function (accessToken, refreshToken, profile, cb) {
-      try {
-        let user = await User.findOne({ googleId: profile.id });
-        if (!user) {
-          user = new User({
-            googleId: profile.id,
-            username: profile.displayName,
-            email: profile.emails?.[0]?.value,
-            avatar: profile.photos?.[0]?.value,
-          });
-          await user.save();
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  const GoogleStrategy = require("passport-google-oauth20").Strategy;
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: `http://localhost:${process.env.PORT || 4000}/auth/google/callback`,
+      },
+      async function (accessToken, refreshToken, profile, cb) {
+        try {
+          let user = await User.findOne({ googleId: profile.id });
+          if (!user) {
+            user = new User({
+              googleId: profile.id,
+              username: profile.displayName,
+              email: profile.emails?.[0]?.value,
+              avatar: profile.photos?.[0]?.value,
+            });
+            await user.save();
+          }
+          return cb(null, user);
+        } catch (err) {
+          return cb(err, null);
         }
-        return cb(null, user);
-      } catch (err) {
-        return cb(err, null);
       }
-    }
-  )
-);
+    )
+  );
+}
 
 // create session id
 // whenever we login it creares user id inside session

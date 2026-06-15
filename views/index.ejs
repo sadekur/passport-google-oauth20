@@ -4,7 +4,7 @@
   <h1 class="display-4 fw-bold">Welcome to AuthApp</h1>
   <div class="col-lg-6 mx-auto">
     <p class="lead mb-4">
-      A secure authentication demo with Google OAuth 2.0 and local login.
+      A secure authentication demo with <%= googleEnabled ? 'Google OAuth 2.0 and' : '' %> local login.
     </p>
     <% if (typeof user !== 'undefined' && user) { %>
       <p class="mb-4">You are logged in as <strong><%= user.username %></strong>.</p>

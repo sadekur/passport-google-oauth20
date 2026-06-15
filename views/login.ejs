@@ -28,10 +28,12 @@
       <button type="submit" class="btn btn-primary w-100 mb-3" onclick="this.disabled=true;this.form.submit();">Login</button>
     </form>
 
+    <% if (typeof googleEnabled !== 'undefined' && googleEnabled) { %>
     <hr />
     <a href="/auth/google" class="btn btn-outline-danger w-100">
       Login with Google
     </a>
+    <% } %>
 
     <p class="text-center mt-3">
       Don't have an account? <a href="/register">Register</a>
