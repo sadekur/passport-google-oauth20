@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>AuthApp</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@7/dist/turbo.umd.min.js"></script>
-    <meta name="turbo-cache-control" content="no-cache">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
+    <script>
+(function(){function n(t,e){e=e||{};fetch(t,{method:e.method||"GET",body:e.body||null,headers:e.headers||{}}).then(function(r){r.text().then(function(h){var d=new DOMParser().parseFromString(h,"text/html");document.title=d.title;document.body.innerHTML=d.body.innerHTML;window.history.pushState({},"",r.url)})}).catch(function(){window.location.href=t})}document.addEventListener("click",function(e){var t=e.target.closest("a[href]");if(!t)return;try{var r=new URL(t.href);if(r.origin!==location.origin)return;if(t.hasAttribute("download")||t.target==="_blank")return;if(e.ctrlKey||e.metaKey||e.shiftKey)return;if(r.pathname.startsWith("/auth/google"))return;e.preventDefault();n(r.pathname+r.search)}catch(u){}});document.addEventListener("submit",function(e){var t=e.target;e.preventDefault();var r=new URL(t.action||window.location.href);var u=(t.method||"GET").toUpperCase();var o=null;var i={};if(u==="POST"){o=new URLSearchParams(new FormData(t));i["Content-Type"]="application/x-www-form-urlencoded"}n(r.pathname+r.search,{method:u,body:o,headers:i})});window.addEventListener("popstate",function(){var e=window.location.pathname+window.location.search;fetch(e).then(function(t){return t.text()}).then(function(t){var r=new DOMParser().parseFromString(t,"text/html");document.title=r.title;document.body.innerHTML=r.body.innerHTML})})})();
+</script>
   </head>
   <body class="bg-gray-50 min-h-screen flex flex-col">
     <nav class="bg-white shadow-sm border-b border-gray-200">
