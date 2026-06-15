@@ -12,6 +12,13 @@ require("./config/passport");
 
 const authRoutes = require("./routes/auth.routes");
 
+const requiredEnv = ["MONGO_URL", "GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"];
+requiredEnv.forEach((key) => {
+  if (!process.env[key]) {
+    console.warn(`WARNING: Missing environment variable ${key}`);
+  }
+});
+
 app.set("view engine", "ejs");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
